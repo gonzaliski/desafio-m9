@@ -1,5 +1,6 @@
 import { getMerchantOrder } from "lib/mercadopago";
 import { Order } from "lib/models/order";
+import { sendPaymentNotif } from "./sendgrid";
 
 export async function processPayment(id,topic){
     console.log(id,topic);
@@ -9,6 +10,7 @@ export async function processPayment(id,topic){
         if(order.order_status == "paid"){
             const orderId = order.external_reference
             const updateRes = await updateOrderOnDB(orderId,order.order_status)
+            sendPaymentNotif(updateRes.email)      
             return updateRes
         }
     }

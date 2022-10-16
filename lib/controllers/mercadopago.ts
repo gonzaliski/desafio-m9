@@ -23,6 +23,7 @@ export async function generateOrder(id,data,userId,userEmail){
               }
             ],
             external_reference: newOrder.id,
+            // notification_url:`https://webhook.site/d2016677-6bbb-4e83-a859-39f6945cf782`
             notification_url:`https://desafio-m9-lovat.vercel.app/api/webhooks/mercadopago`
           }
           )
