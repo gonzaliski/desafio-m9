@@ -6,10 +6,10 @@ export async function processPayment(id,topic){
     console.log(id,topic);
     
     if(topic == "merchant_order"){
-        const order = await getMerchantOrder(id)
-        if(order.order_status == "paid"){
-            const orderId = order.external_reference
-            const updateRes = await updateOrderOnDB(orderId,order.order_status)
+        const merchantOrder = await getMerchantOrder(id)
+        if(merchantOrder.order_status == "paid"){
+            const orderId = merchantOrder.external_reference
+            const updateRes = await updateOrderOnDB(orderId,merchantOrder.order_status)
             sendPaymentNotif(updateRes.email)      
             return updateRes
         }
