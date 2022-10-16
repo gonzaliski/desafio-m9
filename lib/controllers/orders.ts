@@ -9,7 +9,7 @@ export async function processPayment(id,topic){
         const merchantOrder = await getMerchantOrder(id)
         if(merchantOrder.order_status == "paid"){
             const orderId = merchantOrder.external_reference
-            const updateRes = await updateOrderOnDB(orderId,merchantOrder.order_status)
+            const updateRes = await updateOrderOnDB(orderId)
             sendPaymentNotif(updateRes.email)      
             return updateRes
         }
@@ -17,10 +17,10 @@ export async function processPayment(id,topic){
     return null
 }
 
-async function updateOrderOnDB(id,status){
+async function updateOrderOnDB(id){
     const order = new Order(id)
     order.pull()
-    order.data.status = status
+    order.data.status = "paid"
     order.push()
     return {email: order.data.userEmail}
 }
