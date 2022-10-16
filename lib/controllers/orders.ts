@@ -2,6 +2,8 @@ import { getMerchantOrder } from "lib/mercadopago";
 import { Order } from "lib/models/order";
 
 export async function processPayment(id,topic){
+    console.log(id,topic);
+    
     if(topic == "merchant_order"){
         const order = await getMerchantOrder(id)
         if(order.order_status == "paid"){
