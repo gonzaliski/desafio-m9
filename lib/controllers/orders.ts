@@ -19,6 +19,7 @@ export async function processPayment(id,topic){
 
 async function updateOrderOnDB(id){
     const order = new Order(id)
+    console.log(order);
     order.pull()
     order.data.status = "paid"
     order.push()
