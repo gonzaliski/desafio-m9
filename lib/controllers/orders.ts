@@ -20,9 +20,9 @@ export async function processPayment(id,topic){
 async function updateOrderOnDB(id){
     const order = new Order(id)
     console.log(order);
-    order.pull()
+    await order.pull()
     order.data.status = "paid"
-    order.push()
+    await order.push()
     return {email: order.data.userEmail}
 }
 
