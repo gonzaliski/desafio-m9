@@ -3,6 +3,7 @@ import { authMiddleware } from "lib/controllers/middleware";
 import methods from "micro-method-router"
 import { getUserOrders } from "lib/controllers/orders";
 
+
 async function getHandler(req:NextApiRequest,res:NextApiResponse,result){
     const userOrders = await getUserOrders(result.id)
     if(!userOrders){

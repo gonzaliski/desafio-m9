@@ -8,19 +8,19 @@ import { generateToken } from "./jwt";
 const seed = "asdasdasfgdfg"
 const random = gen.create(seed)
 
-export default async function findOrCreateAuth(email){
-    const auth = await Auth.findByEmail(email)
+export default async function findOrCreateAuth(data){
+    const auth = await Auth.findByEmail(data.email)
     if(auth){
         //get
         return auth
     }else{
         //create
         const newUser = await User.createNewUser({
-            email:email.trim().toLowerCase(),
-            address:""
+            email:data.trim().toLowerCase(),
+            address:data.address
         })
         const newAuth = await Auth.createNewAuth({
-            email:email.trim().toLowerCase(),
+            email:data.trim().toLowerCase(),
             userId: newUser.id,
             code:"",
             expires: new Date()
@@ -29,15 +29,15 @@ export default async function findOrCreateAuth(email){
     }
 }
 
-export async function sendCode(email){
-    const auth = await findOrCreateAuth(email)
+export async function sendCode(data){
+    const auth = await findOrCreateAuth(data)
     const code = random.intBetween(10000,99999)
     const now = new Date()
     const minutesFromNow = addMinutes(now,20)
     auth.data.code = code
     auth.data.expires = minutesFromNow
     await auth.push()
-    sendEmail(email,code)
+    sendEmail(data.email,code)
     return {
         code,expires:minutesFromNow
     }
