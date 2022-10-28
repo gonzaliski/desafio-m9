@@ -5,28 +5,32 @@ import gen from "random-seed"
 import { sendEmail } from "./sendgrid";
 import { generateToken } from "./jwt";
 
-const seed = "asdasdasfgdfg"
+const seed = process.env.RANDOM_SEED
 const random = gen.create(seed)
 
 export default async function findOrCreateAuth(data){
     const auth = await Auth.findByEmail(data.email)
+    
     if(auth){
         //get
         return auth
-    }else{
+    }
+    
         //create
         const newUser = await User.createNewUser({
-            email:data.trim().toLowerCase(),
-            address:data.address
+            email:data.email.trim().toLowerCase()
         })
+
+        
         const newAuth = await Auth.createNewAuth({
-            email:data.trim().toLowerCase(),
+            email:data.email.trim().toLowerCase(),
             userId: newUser.id,
             code:"",
             expires: new Date()
         })
+        
         return newAuth
-    }
+    
 }
 
 export async function sendCode(data){
@@ -38,14 +42,10 @@ export async function sendCode(data){
     auth.data.expires = minutesFromNow
     await auth.push()
     sendEmail(data.email,code)
-    return {
-        code,expires:minutesFromNow
-    }
 }
 
 export async function getToken(email,code){
     const auth = await Auth.findByEmail(email)
-    console.log("auth",auth);
     const now = new Date()
     const codeIsExpired = auth ? auth.data.expires > now : false
     console.log("esta expirado", codeIsExpired);
@@ -54,7 +54,7 @@ export async function getToken(email,code){
     console.log("esta correcto", codeIsCorrect);
 
     if(auth && !codeIsExpired && codeIsCorrect){
-        const token = generateToken(auth.data.userId)
+        const token = generateToken({userId:auth.data.userId})
         return {token}
     }
     return {error:"Las credenciales no son validas"}

@@ -5,7 +5,7 @@ import methods from "micro-method-router"
 import * as yup from 'yup'
 
 const bodySchema = yup.object().shape({
-    username: yup.string().required(),
+    username: yup.string().required()
 })
 
 async function getHandler(req:NextApiRequest,res:NextApiResponse,result){

@@ -27,6 +27,7 @@ export class Auth {
   static async findByEmail(email: string) {
     const lowerCasedEmail = email.trim().toLowerCase();
     const results = await collection.where("email", "==", lowerCasedEmail).get();
+    
     if (results.docs.length) {
         //get
         const first = results.docs[0]
@@ -42,6 +43,7 @@ export class Auth {
     const newAuthSnap = await collection.add(data)
     const newAuth = new Auth(newAuthSnap.id)
     newAuth.data = data
+    newAuth.push()
     return newAuth
 }
 }

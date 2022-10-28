@@ -1,12 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export function getOffsetAndLimit(
-  req: NextApiRequest,
+  limitFromReq,
+  offsetFromReq,
   maxLimit = 100,
   maxOffset = 1000
 ) {
-  const queryLimit = parseInt((req.query.limit as string) || "0");
-  const queryOffset = parseInt((req.query.offset as string) || "0");
+  const queryLimit = parseInt((limitFromReq) || "0");
+  const queryOffset = parseInt((offsetFromReq) || "0");
   const limit = queryLimit
     ? queryLimit <= maxLimit
       ? queryLimit

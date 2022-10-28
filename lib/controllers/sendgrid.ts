@@ -5,7 +5,7 @@ export function sendEmail(email,code){
 
         const msg = {
             to: `${email}`,
-            from: 'petfinder.apx@gmail.com', // Use the email address or domain you verified above
+            from: 'gonzaliskidev@gmail.com', // Use the email address or domain you verified above
             subject: `Tu codigo de ingreso`,
             text: `
             Codigo: ${code}
@@ -31,7 +31,7 @@ export function sendPaymentNotif(email){
 
         const msg = {
             to: `${email}`,
-            from: 'petfinder.apx@gmail.com', // Use the email address or domain you verified above
+            from: 'gonzaliskidev@gmail.com', // Use the email address or domain you verified above
             subject: `Estado de tu pago`,
             text: `
             Su pago se ha realizado exitosamente

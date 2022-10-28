@@ -24,6 +24,7 @@ export class User{
         const newUserSnap = await collection.add(data)
         const newUser = new User(newUserSnap.id)
         newUser.data = data
+        newUser.push()
         return newUser
     }
 }

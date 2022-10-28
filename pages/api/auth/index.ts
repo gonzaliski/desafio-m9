@@ -4,9 +4,7 @@ import { sendCode } from "lib/controllers/auth";
 import * as yup from 'yup'
 
 const bodySchema = yup.object().shape({
-    email: yup.string().required(),
-    username: yup.string().required(),
-    address: yup.string().required(),
+    email: yup.string().required()
 })
 
 export default methods({
@@ -17,8 +15,8 @@ export default methods({
             res.status(400).send(e)
         }
         try{
-            const auth = await sendCode(req.body)
-            res.send(auth)
+            await sendCode(req.body)
+            res.send({message:"you will receive a code in your email, please check your inbox"})
         }catch(e){
             res.status(400).send(e)
         }

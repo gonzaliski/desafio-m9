@@ -6,10 +6,10 @@ import method from "micro-method-router"
 import * as yup from 'yup'
 
 const bodySchema = yup.object().shape({
-    username: yup.string().required(),
+    data: yup.string().required(),
 })
 const querySchema = yup.object().shape({
-    username: yup.string().required(),
+    productId: yup.string().required(),
 })
 
 

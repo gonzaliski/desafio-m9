@@ -1,5 +1,4 @@
 import { base } from "lib/airtable";
-import type { NextApiRequest, NextApiResponse } from "next";
 import { getOffsetAndLimit } from "lib/requests";
 import { productIndex } from "lib/algolia";
 
@@ -37,7 +36,7 @@ export function syncAlgolia(req){
 }
 
 export async function searchProducts(query, req){
-  const { offset, limit } = getOffsetAndLimit(req);
+  const { offset, limit } = getOffsetAndLimit(req.query.limit, req.query.offset);
   const results =  await productIndex.search(query as string, {
     hitsPerPage: offset,
     length: limit,
