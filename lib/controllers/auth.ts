@@ -5,8 +5,7 @@ import gen from "random-seed"
 import { sendEmail } from "./sendgrid";
 import { generateToken } from "./jwt";
 
-const seed = process.env.RANDOM_SEED
-const random = gen.create(seed)
+const random = gen.create()
 
 export default async function findOrCreateAuth(data){
     const auth = await Auth.findByEmail(data.email)

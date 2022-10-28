@@ -35,7 +35,8 @@
       "--experimental-specifier-resolution=node"
     ],
     "environmentVariables": {
-      "TESTING": "true"
+      "TESTING": "true",
+      "SECRET":"asda7s6457345jk"
     },
     "extensions": {
       "ts": "module"

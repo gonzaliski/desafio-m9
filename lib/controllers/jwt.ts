@@ -1,11 +1,11 @@
-import * as jwt from "jsonwebtoken"
+import jsonwebtoken from "jsonwebtoken"
 
 const SECRET = process.env.SECRET
 
 export function generateToken(param){
-    return jwt.sign(param,SECRET)
+    return jsonwebtoken.sign(param,SECRET)
 }
 
 export function decodeToken(token:string){
-    return jwt.verify(token,SECRET)
+    return jsonwebtoken.verify(token,SECRET) as jsonwebtoken.JwtPayload
 }
