@@ -6,8 +6,6 @@ import { processPayment } from "lib/controllers/orders";
 export default methods({
     async post(req:NextApiRequest,res:NextApiResponse){
         const { id, topic} = req.query
-        console.log("este es el webhook",id,topic);
-        
         const result = await processPayment(id,topic)
         res.status(200).send(result)
     },

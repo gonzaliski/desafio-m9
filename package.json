@@ -6,6 +6,7 @@
     "algoliasearch": "^4.14.2",
     "ava": "^4.3.3",
     "date-fns": "^2.29.3",
+    "dotenv": "^16.0.3",
     "esbuild-node-loader": "^0.8.0",
     "firebase": "^9.10.0",
     "firebase-admin": "^11.0.1",
@@ -36,7 +37,7 @@
     ],
     "environmentVariables": {
       "TESTING": "true",
-      "SECRET":"asda7s6457345jk"
+      "SECRET": "asda7s6457345jk"
     },
     "extensions": {
       "ts": "module"
