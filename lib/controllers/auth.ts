@@ -40,7 +40,7 @@ export async function sendCode(data){
     auth.data.code = code
     auth.data.expires = minutesFromNow
     await auth.push()
-    sendEmail(data.email,code)
+    await sendEmail(data.email,code)
 }
 
 export async function getToken(email,code){
