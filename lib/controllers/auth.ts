@@ -2,7 +2,7 @@ import { Auth } from "lib/models/auth";
 import { User } from "lib/models/user";
 import addMinutes from "date-fns/addMinutes"
 import gen from "random-seed"
-import { sendEmail } from "./sendgrid";
+import { sendEmail } from "./nodemailer";
 import { generateToken } from "./jwt";
 
 const random = gen.create()

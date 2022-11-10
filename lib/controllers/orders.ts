@@ -1,6 +1,6 @@
 import { getMerchantOrder } from "lib/mercadopago";
 import { Order } from "lib/models/order";
-import { sendPaymentNotif } from "./sendgrid";
+import { sendPaymentNotif } from "./nodemailer";
 
 export async function processPayment(id,topic){
     console.log(id,topic);
