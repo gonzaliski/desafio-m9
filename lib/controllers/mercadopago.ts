@@ -3,6 +3,7 @@ import { Order } from "lib/models/order";
 
 export async function generateOrder(id,data,userId,userEmail){
     const newOrder = await Order.createNewOrder({productId:id,data,userId,userEmail})
+    try{
     const fetchMerchantOrder:any = await fetch('https://api.mercadopago.com/checkout/preferences',{
         method:'post',
         headers:{
@@ -32,4 +33,8 @@ export async function generateOrder(id,data,userId,userEmail){
     console.log(merchantRes);
     
     return {url:merchantRes.init_point, orderId:newOrder.id}
+  }catch(e){
+    throw e
+  }
+
 }

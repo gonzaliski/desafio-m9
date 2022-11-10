@@ -6,7 +6,7 @@ import method from "micro-method-router"
 import * as yup from 'yup'
 
 const bodySchema = yup.object().shape({
-    data: yup.string().required(),
+    envio: yup.string().required(),
 })
 const querySchema = yup.object().shape({
     productId: yup.string().required(),
@@ -21,13 +21,11 @@ async function postHandler(req:NextApiRequest,res:NextApiResponse,result){
         res.status(400).send(e)
     }
     try{
-
-        const user = await retrieveUserData(result.id)
+        console.log(result);
+        
+        const user = await retrieveUserData(result.userId)
         const {productId} = req.query
-        if(!productId){
-            res.status(404).send("No se ha enviado un producto")
-        }
-        const mercadoPagoResponse = await generateOrder(productId,req.body,result.id,user.email)
+        const mercadoPagoResponse = await generateOrder(productId,req.body,result.userId,user.email)
         res.send(mercadoPagoResponse)    
     }catch(e){
         res.status(400).send(e)
