@@ -5,7 +5,7 @@ import { getUserOrders } from "lib/controllers/orders";
 
 
 async function getHandler(req:NextApiRequest,res:NextApiResponse,result){
-    const userOrders = await getUserOrders(result.id)
+    const userOrders = await getUserOrders(result.userId)
     if(!userOrders){
         res.status(404).send({message:"No se ha encontrado"})
     }

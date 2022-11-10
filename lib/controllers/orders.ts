@@ -10,7 +10,7 @@ export async function processPayment(id,topic){
         if(merchantOrder.order_status == "paid"){
             const orderId = merchantOrder.external_reference
             const updateRes = await updateOrderOnDB(orderId)
-            sendPaymentNotif(updateRes.email)      
+            await sendPaymentNotif(updateRes.email)      
             return updateRes
         }
     }

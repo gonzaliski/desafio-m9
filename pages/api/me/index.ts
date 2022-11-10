@@ -9,7 +9,7 @@ const bodySchema = yup.object().shape({
 })
 
 async function getHandler(req:NextApiRequest,res:NextApiResponse,result){
-    const newUser = await retrieveUserData(result.id)
+    const newUser = await retrieveUserData(result.userId)
     res.send(newUser)    
 }
 
@@ -20,7 +20,7 @@ async function patchHandler(req:NextApiRequest,res:NextApiResponse,result){
         res.status(400).send(e)
     }
     try{
-        const updateUserRes = await updateUser(req.body,result.id)
+        const updateUserRes = await updateUser(req.body,result.userId)
         res.send(updateUserRes)
     }catch(e){
         res.status(400).send(e)
