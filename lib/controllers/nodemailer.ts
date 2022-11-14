@@ -24,7 +24,7 @@ export async function sendPaymentNotif(email) {
           to: email, // list of receivers
           subject: "Pago con exito ✔", // Subject line
           text: `Hola!, te informamos que se ha realizado con exito tu pago.`, // plain text body
-          html: "<b>Hello world?</b>", // html body
+          html: "<b>Hola!, te informamos que se ha realizado con exito tu pago.</b>", // html body
         });
       } catch (e) {
         throw e;

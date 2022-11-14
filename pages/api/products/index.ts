@@ -20,6 +20,6 @@ export default methods({
     const product = await getProductData(productId)
     res.status(200).send(product)
   }catch(e){
-    res.status(404).send({message:"No"})
+    res.status(404).send({message:"No product found"})
   }
 }})
