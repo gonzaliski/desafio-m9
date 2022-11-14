@@ -47,3 +47,13 @@ export async function searchProducts(query, req){
 export async function getProductData(id){
   return await productIndex.getObject(id)
 }
+
+export async function getProductsId(){
+  let hits = [];
+  await productIndex.browseObjects({
+    batch: batch => {
+      hits = hits.concat(batch);
+    }
+  })
+  return hits.map(h=>h.objectID)
+}
