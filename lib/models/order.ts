@@ -1,11 +1,11 @@
 import { firestore } from "lib/firestore";
 
 type orderData = {
-  data:any;
-  productId:string;
-  status?:string;
-  userEmail:string;
-  userId:string;
+  data: any;
+  productId: string;
+  status?: string;
+  userEmail: string;
+  userId: string;
 };
 
 const collection = firestore.collection("orders");

@@ -2,31 +2,31 @@ import { getMerchantOrder } from "lib/mercadopago";
 import { Order } from "lib/models/order";
 import { sendPaymentNotif } from "./nodemailer";
 
-export async function processPayment(id,topic){
-    console.log(id,topic);
-    
-    if(topic == "merchant_order"){
-        const merchantOrder = await getMerchantOrder(id)
-        if(merchantOrder.order_status == "paid"){
-            const orderId = merchantOrder.external_reference
-            const updateRes = await updateOrderOnDB(orderId)
-            await sendPaymentNotif(updateRes.email)      
-            return updateRes
-        }
+export async function processPayment(id, topic) {
+  console.log(id, topic);
+
+  if (topic == "merchant_order") {
+    const merchantOrder = await getMerchantOrder(id);
+    if (merchantOrder.order_status == "paid") {
+      const orderId = merchantOrder.external_reference;
+      const updateRes = await updateOrderOnDB(orderId);
+      await sendPaymentNotif(updateRes.email);
+      return updateRes;
     }
-    return null
+  }
+  return null;
 }
 
-async function updateOrderOnDB(id){
-    const order = new Order(id)
-    console.log(order);
-    await order.pull()
-    order.data.status = "paid"
-    await order.push()
-    return {email: order.data.userEmail}
+async function updateOrderOnDB(id) {
+  const order = new Order(id);
+  console.log(order);
+  await order.pull();
+  order.data.status = "paid";
+  await order.push();
+  return { email: order.data.userEmail };
 }
 
-export async function getUserOrders(id){
-    const result = Order.findUserOrders(id)
-    return result
+export async function getUserOrders(id) {
+  const result = Order.findUserOrders(id);
+  return result;
 }

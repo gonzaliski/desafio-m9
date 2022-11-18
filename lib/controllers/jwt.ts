@@ -1,11 +1,11 @@
-import jsonwebtoken from "jsonwebtoken"
+import jsonwebtoken from "jsonwebtoken";
 
-const SECRET = process.env.SECRET
+const SECRET = process.env.SECRET;
 
-export function generateToken(param){
-    return jsonwebtoken.sign(param,SECRET)
+export function generateToken(param) {
+  return jsonwebtoken.sign(param, SECRET);
 }
 
-export function decodeToken(token:string){
-    return jsonwebtoken.verify(token,SECRET) as jsonwebtoken.JwtPayload
+export function decodeToken(token: string) {
+  return jsonwebtoken.verify(token, SECRET) as jsonwebtoken.JwtPayload;
 }
