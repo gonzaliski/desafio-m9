@@ -20,7 +20,7 @@ const handler = methods({
     try {
       const { email, code } = req.body;
       const result = await getToken(email, code);
-      res.send(result.token);
+      res.send({ token: result.token });
     } catch (e) {
       res.status(400).send(e);
     }
