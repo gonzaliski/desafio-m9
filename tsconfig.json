@@ -24,7 +24,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-, "next.config.js"  ],
+, "global.d.js"  ],
   "exclude": [
     "node_modules"
   ]
