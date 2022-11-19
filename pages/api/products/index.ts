@@ -2,12 +2,13 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { getProductData, searchProducts } from "lib/controllers/algolia";
 import methods from "micro-method-router";
 import * as yup from "yup";
+import { handlerCORS } from "lib/middlewares/middleware";
 
 const querySchema = yup.object().shape({
   productId: yup.string().required(),
 });
 
-export default methods({
+const handler = methods({
   async get(req: NextApiRequest, res: NextApiResponse) {
     try {
       await querySchema.validate(req.query);
@@ -23,3 +24,5 @@ export default methods({
     }
   },
 });
+
+export default handlerCORS(handler);
