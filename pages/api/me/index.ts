@@ -9,7 +9,9 @@ import methods from "micro-method-router";
 import * as yup from "yup";
 
 const bodySchema = yup.object().shape({
-  username: yup.string().required(),
+  username: yup.string(),
+  telephone: yup.number(),
+  default: undefined,
 });
 
 async function getHandler(req: NextApiRequest, res: NextApiResponse, result) {
@@ -24,6 +26,9 @@ async function patchHandler(req: NextApiRequest, res: NextApiResponse, result) {
     res.status(400).send(e);
   }
   try {
+    if (JSON.stringify(req.body) == "{}") {
+      return res.send("no data sent");
+    }
     const updateUserRes = await updateUser(req.body, result.userId);
     res.send(updateUserRes);
   } catch (e) {
