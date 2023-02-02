@@ -12,12 +12,15 @@ export async function retrieveUserData(id) {
 }
 
 export async function updateUser(data: userData, id) {
+  const objectKeys = Object.keys(data);
   const user = new User(id);
   await user.pull();
-  user.data.username = data.username;
+  for (let key of objectKeys) {
+    user.data[key] = data[key];
+  }
   await user.push();
   return {
-    newUsername: data.username,
+    newData: user.data,
   };
 }
 
