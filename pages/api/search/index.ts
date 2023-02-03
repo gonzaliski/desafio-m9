@@ -19,7 +19,7 @@ const handler = methods({
       const { search } = req.query;
       const searchRes = await searchProducts(search, req);
       res.send({
-        results: searchRes.results,
+        results: searchRes.results.hits,
         pagination: {
           offset: searchRes.offset,
           limit: searchRes.limit,
