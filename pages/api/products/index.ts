@@ -18,7 +18,14 @@ const handler = methods({
     try {
       const { productId } = req.query;
       const product = await getProductData(productId);
-      res.status(200).send(product);
+      res.status(200).send({
+        objectID: product.objectID,
+        title: product["Name"],
+        description: product["Description"],
+        price: product["Unit cost"],
+        images: product["Images"].map((img: any) => img.url),
+        stock: product["In stock"],
+      });
     } catch (e) {
       res.status(404).send({ message: "No product found" });
     }
