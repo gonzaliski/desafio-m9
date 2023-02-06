@@ -19,7 +19,16 @@ const handler = methods({
       const { search } = req.query;
       const searchRes = await searchProducts(search, req);
       res.send({
-        results: searchRes.results.hits,
+        results: searchRes.results.hits.map((h) => {
+          return {
+            objectID: h.objectID,
+            title: h["Name"],
+            description: h["Description"],
+            price: h["Unit cost"],
+            images: h["Images"].map((img: any) => img.url),
+            stock: h["In stock"],
+          };
+        }),
         pagination: {
           offset: searchRes.offset,
           limit: searchRes.limit,
