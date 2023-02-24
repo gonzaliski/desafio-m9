@@ -1,6 +1,14 @@
 import { Order } from "lib/models/order";
+import address from "pages/api/me/address";
 
-export async function generateOrder(id, data, userId, userEmail) {
+export async function generateOrder(
+  id,
+  data,
+  userId,
+  userEmail,
+  address,
+  productData
+) {
   const newOrder = await Order.createNewOrder({
     productId: id,
     data,
@@ -19,18 +27,31 @@ export async function generateOrder(id, data, userId, userEmail) {
         body: JSON.stringify({
           items: [
             {
-              title: "Gonzaliski Remera",
-              description: "Gonzaliski description",
-              picture_url: "http://www.myapp.com/myimage.jpg",
-              category_id: "car_electronics",
+              title: productData.title || "Gonzaliski Item",
+              description: productData.desc || "Gonzaliski Item_description",
+              picture_url:
+                productData.imgUrl || "http://www.myapp.com/myimage.jpg",
+              category_id: "furniture",
               quantity: 1,
               currency_id: "ARS",
-              unit_price: 10,
+              unit_price: productData.price || 10,
             },
           ],
+          shipments: {
+            free_methods: [
+              {
+                mode: "me2",
+              },
+            ],
+            receiver_address: {
+              street_name: address,
+            },
+          },
           external_reference: newOrder.id,
-          // notification_url:`https://webhook.site/d2016677-6bbb-4e83-a859-39f6945cf782`
           notification_url: `https://desafio-m9-lovat.vercel.app/api/webhooks/mercadopago`,
+          back_urls: {
+            success: "https://desafio-m10-one.vercel.app/thank-you",
+          },
         }),
       }
     );

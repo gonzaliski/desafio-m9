@@ -7,6 +7,12 @@ import * as yup from "yup";
 
 const bodySchema = yup.object().shape({
   envio: yup.string().required(),
+  productData: yup.object().shape({
+    title: yup.string(),
+    desc: yup.string(),
+    price: yup.number(),
+    imgUrl: yup.string(),
+  }),
 });
 const querySchema = yup.object().shape({
   productId: yup.string().required(),
@@ -24,11 +30,14 @@ async function postHandler(req: NextApiRequest, res: NextApiResponse, result) {
 
     const user = await retrieveUserData(result.userId);
     const { productId } = req.query;
+    const { address, productData } = req.body;
     const mercadoPagoResponse = await generateOrder(
       productId,
       req.body,
       result.userId,
-      user.email
+      user.email,
+      address,
+      productData
     );
     res.send(mercadoPagoResponse);
   } catch (e) {
