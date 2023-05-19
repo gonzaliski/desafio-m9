@@ -1,9 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import methods from "micro-method-router";
 import { syncAlgolia } from "lib/controllers/algolia";
+import { handlerCORS } from "lib/middlewares/middleware";
 
-export default methods({
-  get(req: NextApiRequest, res: NextApiResponse) {
+const handler = methods({
+  async get(req: NextApiRequest, res: NextApiResponse) {
     try {
       const syncRes = syncAlgolia(req);
       res.status(200).send({ message: syncRes });
@@ -12,3 +13,5 @@ export default methods({
     }
   },
 });
+
+export default handlerCORS(handler);
