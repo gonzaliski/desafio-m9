@@ -1,8 +1,8 @@
-import type { NextApiRequest, NextApiResponse } from "next";
-import { getProductData, searchProducts } from "lib/controllers/algolia";
-import methods from "micro-method-router";
-import * as yup from "yup";
+import { getProductData } from "lib/controllers/algolia";
 import { handlerCORS } from "lib/middlewares/middleware";
+import methods from "micro-method-router";
+import type { NextApiRequest, NextApiResponse } from "next";
+import * as yup from "yup";
 
 const querySchema = yup.object().shape({
   productId: yup.string().required(),
@@ -20,11 +20,17 @@ const handler = methods({
       const product = await getProductData(productId);
       res.status(200).send({
         objectID: product.objectID,
-        title: product["Name"],
-        description: product["Description"],
-        price: product["Unit cost"],
-        images: product["Images"].map((img: any) => img.url),
-        stock: product["In stock"],
+        title: product["name"],
+        description:
+          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt facere animi, enim corrupti saepe, ad productarum a voluptatum nostrum facilis dolorum unde non! Distinctio omnis commodi obcaecati iure, assumenda soluta",
+        price: product["price"],
+        imageUrl: product["imageUrl"],
+        additionalImages: [
+          product["additionalImageUrls_0"],
+          product["additionalImageUrls_1"],
+          product["additionalImageUrls_2"],
+        ],
+        stock: true,
       });
     } catch (e) {
       res.status(404).send({ message: "No product found" });

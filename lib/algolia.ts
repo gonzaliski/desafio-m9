@@ -4,4 +4,4 @@ const client = algoliasearch(
   process.env.ALGOLIA_APP_ID,
   process.env.ALGOLIA_API_KEY
 );
-export const productIndex = client.initIndex("products");
+export const productIndex = client.initIndex("shoes");

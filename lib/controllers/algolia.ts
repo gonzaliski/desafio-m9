@@ -4,7 +4,7 @@ import { productIndex } from "lib/algolia";
 
 export function syncAlgolia(req) {
   const { limit } = getOffsetAndLimit(req, 100, 1000);
-  base("Furniture")
+  base("shoes")
     .select({
       pageSize: limit,
     })
@@ -44,6 +44,20 @@ export async function searchProducts(query, req) {
     hitsPerPage: offset,
     length: limit,
   });
+  return { results, offset, limit };
+}
+export async function searchFeatured(req) {
+  const { offset, limit } = getOffsetAndLimit(
+    req.query.limit,
+    req.query.offset
+  );
+  const results = await productIndex.search("", {
+    filters: "{featured:true}",
+    hitsPerPage: offset,
+    length: limit,
+  });
+  console.log(results);
+
   return { results, offset, limit };
 }
 
