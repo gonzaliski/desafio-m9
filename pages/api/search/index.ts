@@ -23,15 +23,8 @@ const handler = methods({
           return {
             objectID: h.objectID,
             title: h["name"],
-            description:
-              "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt facere animi, enim corrupti saepe, ad harum a voluptatum nostrum facilis dolorum unde non! Distinctio omnis commodi obcaecati iure, assumenda soluta",
             price: h["price"],
             imageUrl: h["imageUrl"],
-            additionalImages: [
-              h["additionalImageUrls_0"],
-              h["additionalImageUrls_1"],
-              h["additionalImageUrls_2"],
-            ],
             stock: true,
           };
         }),
