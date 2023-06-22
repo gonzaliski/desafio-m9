@@ -19,7 +19,7 @@ const handler = methods({
       const { productId } = req.query;
       const product = await getProductData(productId);
       res.status(200).send({
-        objectID: product.objectID,
+        id: product.objectID,
         title: product["name"],
         description:
           "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt facere animi, enim corrupti saepe, ad productarum a voluptatum nostrum facilis dolorum unde non! Distinctio omnis commodi obcaecati iure, assumenda soluta",

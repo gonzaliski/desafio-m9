@@ -21,7 +21,7 @@ const handler = methods({
       res.send({
         results: searchRes.results.hits.map((h) => {
           return {
-            objectID: h.objectID,
+            id: h.objectID,
             title: h["name"],
             price: h["price"],
             imageUrl: h["imageUrl"],
