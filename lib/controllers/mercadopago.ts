@@ -1,16 +1,21 @@
 import { Order } from "lib/models/order";
-import address from "pages/api/me/address";
 
+type productData = {
+  id: string;
+  title: string;
+  desc: string;
+  price: string;
+  imgUrl: string;
+};
 export async function generateOrder(
-  id,
-  data,
-  userId,
-  userEmail,
-  address,
-  productData
+  data: string,
+  userId: string,
+  userEmail: string,
+  address: string,
+  products: productData[]
 ) {
   const newOrder = await Order.createNewOrder({
-    productId: id,
+    productsId: products.map((p) => p.id),
     data,
     userId,
     userEmail,
@@ -25,18 +30,18 @@ export async function generateOrder(
           "Content-Type": "Application/json",
         },
         body: JSON.stringify({
-          items: [
-            {
-              title: productData.title || "Gonzaliski Item",
-              description: productData.desc || "Gonzaliski Item_description",
-              picture_url:
-                productData.imgUrl || "http://www.myapp.com/myimage.jpg",
-              category_id: "furniture",
+          items: products.map((p) => {
+            return {
+              title: p.title || "Gonzaliski Item",
+              description: "Prenda de e-commerce",
+              picture_url: p.imgUrl,
+              category_id: "clothes",
               quantity: 1,
               currency_id: "ARS",
-              unit_price: productData.price || 10,
-            },
-          ],
+              unit_price: p.price,
+            };
+          }),
+
           shipments: {
             free_methods: [
               {

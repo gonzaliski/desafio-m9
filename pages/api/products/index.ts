@@ -24,13 +24,14 @@ const handler = methods({
         description:
           "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt facere animi, enim corrupti saepe, ad productarum a voluptatum nostrum facilis dolorum unde non! Distinctio omnis commodi obcaecati iure, assumenda soluta",
         price: product["price"],
+        sizesAvailable: product["sizesAvailable"],
         images: [
           product["imageUrl"],
           product["additionalImageUrls_0"],
           product["additionalImageUrls_1"],
           product["additionalImageUrls_2"],
         ],
-        stock: true,
+        stock: product["stock"],
       });
     } catch (e) {
       res.status(404).send({ message: "No product found" });

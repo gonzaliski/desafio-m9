@@ -7,40 +7,35 @@ import * as yup from "yup";
 
 const bodySchema = yup.object().shape({
   envio: yup.string().required(),
-  productData: yup.object().shape({
-    title: yup.string(),
-    desc: yup.string(),
-    price: yup.number(),
-    imgUrl: yup.string(),
-  }),
-});
-const querySchema = yup.object().shape({
-  productId: yup.string().required(),
+  products: yup.array().of(
+    yup.object().shape({
+      title: yup.string(),
+      size: yup.string(),
+      price: yup.number(),
+      imgUrl: yup.string(),
+    })
+  ),
 });
 
 async function postHandler(req: NextApiRequest, res: NextApiResponse, result) {
   try {
     await bodySchema.validate(req.body);
-    await querySchema.validate(req.query);
   } catch (e) {
     res.status(400).send(e);
   }
   try {
-    console.log(result);
-
     const user = await retrieveUserData(result.userId);
-    const { productId } = req.query;
-    const { address, productData } = req.body;
+    const { address, products } = req.body;
     const mercadoPagoResponse = await generateOrder(
-      productId,
       req.body,
       result.userId,
       user.email,
       address,
-      productData
+      products
     );
     res.send(mercadoPagoResponse);
   } catch (e) {
+    console.log(e);
     res.status(400).send(e);
   }
 }

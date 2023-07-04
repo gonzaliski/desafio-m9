@@ -46,19 +46,15 @@ export async function searchProducts(query, req) {
   });
   return { results, offset, limit };
 }
-export async function searchFeatured(req) {
-  const { offset, limit } = getOffsetAndLimit(
-    req.query.limit,
-    req.query.offset
-  );
-  const results = await productIndex.search("", {
-    filters: "{featured:true}",
-    hitsPerPage: offset,
-    length: limit,
+export async function searchFeatured(q?) {
+  const results = await productIndex.search(q as string, {
+    filters: "featured:true",
+    page: 0,
+    hitsPerPage: 3,
   });
   console.log(results);
 
-  return { results, offset, limit };
+  return { results };
 }
 
 export async function getProductData(id) {

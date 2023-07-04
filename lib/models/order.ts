@@ -2,7 +2,7 @@ import { firestore } from "lib/firestore";
 
 type orderData = {
   data: any;
-  productId: string;
+  productsId: string[];
   status?: string;
   userEmail: string;
   userId: string;
