@@ -1,6 +1,6 @@
 import { base } from "lib/airtable";
 import { getOffsetAndLimit } from "lib/requests";
-import { productIndex } from "lib/algolia";
+import { productIndex, productAscIndex, productDescIndex } from "lib/algolia";
 
 export function syncAlgolia(req) {
   const { limit } = getOffsetAndLimit(req, 100, 1000);
@@ -35,12 +35,24 @@ export function syncAlgolia(req) {
   return "ok";
 }
 
-export async function searchProducts(query, req) {
+export async function searchProducts(query, rule, req) {
   const { offset, limit } = getOffsetAndLimit(
     req.query.limit,
     req.query.offset
   );
-  const results = await productIndex.search(query as string, {
+
+  let index;
+  if (rule == "most-relevant") {
+    index = productIndex;
+  }
+  if (rule == "lower-price") {
+    index = productAscIndex;
+  }
+  if (rule == "higher-price") {
+    index = productDescIndex;
+  }
+
+  const results = await index.search(query as string, {
     hitsPerPage: offset,
     length: limit,
   });

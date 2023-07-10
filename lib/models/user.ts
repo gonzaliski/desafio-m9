@@ -23,7 +23,7 @@ export class User {
   static async createNewUser(data) {
     const newUserSnap = await collection.add(data);
     const newUser = new User(newUserSnap.id);
-    newUser.data = data;
+    newUser.data = { ...data, favourites: [], shoppingCart: [] };
     newUser.push();
     return newUser;
   }

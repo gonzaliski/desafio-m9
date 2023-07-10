@@ -6,6 +6,10 @@ import { handlerCORS } from "lib/middlewares/middleware";
 
 const querySchema = yup.object().shape({
   search: yup.string(),
+  rule: yup
+    .string()
+    .oneOf(["most-relevant", "lower-price", "higher-price"])
+    .required(),
 });
 
 const handler = methods({
@@ -16,8 +20,9 @@ const handler = methods({
       res.status(400).send(e);
     }
     try {
-      const { search } = req.query;
-      const searchRes = await searchProducts(search, req);
+      const { search, rule } = req.query;
+      const searchRes = await searchProducts(search, rule, req);
+      console.log(searchRes);
       res.send({
         results: searchRes.results.hits.map((h) => {
           return {
