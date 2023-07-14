@@ -1,15 +1,11 @@
-import type { NextApiRequest, NextApiResponse } from "next";
-import { searchProducts } from "lib/controllers/algolia";
-import methods from "micro-method-router";
-import * as yup from "yup";
+import { searchFeatured } from "lib/controllers/algolia";
 import { handlerCORS } from "lib/middlewares/middleware";
+import methods from "micro-method-router";
+import type { NextApiRequest, NextApiResponse } from "next";
+import * as yup from "yup";
 
 const querySchema = yup.object().shape({
   search: yup.string(),
-  rule: yup
-    .string()
-    .oneOf(["most-relevant", "lower-price", "higher-price"])
-    .required(),
 });
 
 const handler = methods({
@@ -20,9 +16,8 @@ const handler = methods({
       res.status(400).send(e);
     }
     try {
-      const { search, rule } = req.query;
-      const searchRes = await searchProducts(search, rule, req);
-      console.log(searchRes);
+      const { search } = req.query;
+      const searchRes = await searchFeatured(search);
       res.send({
         results: searchRes.results.hits.map((h) => {
           return {
@@ -34,11 +29,6 @@ const handler = methods({
             stock: h["stock"],
           };
         }),
-        pagination: {
-          offset: searchRes.offset,
-          limit: searchRes.limit,
-          total: searchRes.results.nbHits,
-        },
       });
     } catch (e) {
       res.status(404).send({ message: "Not found" });

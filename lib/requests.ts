@@ -1,8 +1,8 @@
 export function getOffsetAndLimit(
   limitFromReq,
   offsetFromReq,
-  maxLimit = 100,
-  maxOffset = 1000
+  maxLimit = 50,
+  maxOffset = 100
 ) {
   const queryLimit = parseInt(limitFromReq || "0");
   const queryOffset = parseInt(offsetFromReq || "0");
