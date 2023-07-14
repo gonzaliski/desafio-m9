@@ -25,7 +25,7 @@
     "yup": "^0.32.11"
   },
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 3001",
     "build": "next build",
     "start": "next",
     "test": "ava"
