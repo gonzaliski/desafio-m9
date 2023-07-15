@@ -14,6 +14,7 @@ productIndex
       "price",
       "filterOnly(sizesAvailable)", // or 'filterOnly(categories)' for filtering purposes only
       "filterOnly(featured)", // or 'filterOnly(categories)' for filtering purposes only
+      "filterOnly(genre)", // or 'filterOnly(categories)' for filtering purposes only
     ],
   })
   .then(() => {

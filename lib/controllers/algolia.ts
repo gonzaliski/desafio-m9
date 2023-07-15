@@ -35,22 +35,24 @@ export function syncAlgolia(req) {
   return "ok";
 }
 
+function getIndex(rule: string) {
+  if (rule == "most-relevant") {
+    return productIndex;
+  }
+  if (rule == "lower-price") {
+    return productAscIndex;
+  }
+  if (rule == "higher-price") {
+    return productDescIndex;
+  }
+}
+
 export async function searchProducts(query, rule, req) {
   const { offset, limit } = getOffsetAndLimit(
     req.query.limit,
     req.query.offset
   );
-
-  let index;
-  if (rule == "most-relevant") {
-    index = productIndex;
-  }
-  if (rule == "lower-price") {
-    index = productAscIndex;
-  }
-  if (rule == "higher-price") {
-    index = productDescIndex;
-  }
+  const index = getIndex(rule);
 
   const results = await index.search(query as string, {
     hitsPerPage: offset,
@@ -67,6 +69,23 @@ export async function searchFeatured(q?) {
   console.log(results);
 
   return { results };
+}
+export async function searchByGenre(
+  genre: string,
+  rule = "most-relevant",
+  req
+) {
+  const { offset, limit } = getOffsetAndLimit(
+    req.query.limit,
+    req.query.offset
+  );
+  const index = getIndex(rule);
+
+  const results = await index.search("", {
+    filters: `genre:${genre}`,
+    hitsPerPage: offset,
+  });
+  return { results, offset, limit };
 }
 
 export async function getProductData(id) {
